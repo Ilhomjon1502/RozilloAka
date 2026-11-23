@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="uz">
+<html lang="uz" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -9,7 +9,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#0a1020;--bg2:#0f1830;--card:#131d36;--line:#23304f;--tx:#eef2ff;--mut:#9aa8c9;--or:#ff9f43;--bl:#6b95ff;--gr:#3ecf8e;--pk:#ff6b9d;--code:#0a0f1d}
-:root[data-theme=light]{--bg:#eef1f8;--bg2:#fff;--card:#fff;--line:#d5dbea;--tx:#0e1730;--mut:#5a6786;--code:#0e1730}
+:root[data-theme=light]{--bg:#f4f6fb;--bg2:#fff;--card:#fff;--line:#d3d9ea;--tx:#0e1730;--mut:#44506e;--code:#0e1730;--or:#d4690a;--bl:#2a55d4;--gr:#0f8a53;--pk:#d02e69}
+:root[data-theme=light] #stage{box-shadow:0 12px 50px rgba(30,50,100,.18);background:radial-gradient(1100px 600px at 85% -10%,rgba(42,85,212,.10),transparent 60%),radial-gradient(900px 500px at -10% 110%,rgba(212,105,10,.08),transparent 60%),var(--bg)}
+:root[data-theme=light] .card{box-shadow:0 2px 10px rgba(30,50,100,.07)}
+:root[data-theme=light] #ui{background:rgba(255,255,255,.92)}
+:root[data-theme=light] #grid{background:rgba(244,246,251,.97)}
+:root[data-theme=light] .note{background:#e6f7ee;color:#0b3d27}
+:root[data-theme=light] .code .c{color:#8fa0c8}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--tx);font-family:Nunito,system-ui,sans-serif}
 #viewport{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
@@ -17,59 +23,62 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--tx);font-
 .slide{position:absolute;inset:0;padding:54px 72px 64px;display:none;flex-direction:column;justify-content:center;gap:22px}
 .slide.on{display:flex;animation:in .45s ease}
 @keyframes in{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:none}}
-.kick{font-size:15px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--or)}
-h1{font-size:68px;line-height:1.04;font-weight:900;letter-spacing:-.02em}
-h2{font-size:42px;line-height:1.1;font-weight:900;letter-spacing:-.01em}
-h3{font-size:23px;font-weight:800}
-p,li{font-size:22px;line-height:1.45;color:var(--mut)}
+.kick{font-size:18px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--or)}
+h1{font-size:78px;line-height:1.04;font-weight:900;letter-spacing:-.02em}
+h2{font-size:50px;line-height:1.1;font-weight:900;letter-spacing:-.01em}
+h3{font-size:28px;font-weight:800}
+h3 a{color:var(--tx);text-decoration:none}h3 a:hover{color:var(--bl)}
+p,li{font-size:26px;line-height:1.45;color:var(--mut)}
 b,strong{color:var(--tx)}
 .acc{color:var(--bl)}.or{color:var(--or)}.gr{color:var(--gr)}.pk{color:var(--pk)}
-.lead{font-size:26px;color:var(--mut);max-width:900px}
+.lead{font-size:30px;color:var(--mut);max-width:900px}
 .grid{display:grid;gap:18px}.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}.g6{grid-template-columns:repeat(3,1fr)}
 .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px 24px}
-.card h3{margin:6px 0 8px}.card p,.card li{font-size:19px}
+.card h3{margin:6px 0 8px}.card p,.card li{font-size:23px}
 .card.hl{border-color:var(--or);box-shadow:0 0 0 1px var(--or) inset}
-.tag{display:inline-block;font-size:12px;font-weight:900;letter-spacing:.08em;padding:4px 10px;border-radius:99px;text-transform:uppercase}
+.tag{display:inline-block;font-size:15px;font-weight:900;letter-spacing:.08em;padding:4px 10px;border-radius:99px;text-transform:uppercase}
 .t-or{background:rgba(255,159,67,.18);color:var(--or)}.t-bl{background:rgba(107,149,255,.18);color:var(--bl)}.t-gr{background:rgba(62,207,142,.18);color:var(--gr)}.t-pk{background:rgba(255,107,157,.18);color:var(--pk)}
 ul{list-style:none;display:grid;gap:8px}
 ul li{padding-left:26px;position:relative}
 ul li:before{content:"";position:absolute;left:4px;top:.6em;width:9px;height:9px;border-radius:50%;background:var(--bl)}
 .ok li:before{background:var(--gr)}.no li:before{background:var(--pk)}
-.num{font-size:60px;font-weight:900;line-height:1}
+.num{font-size:68px;font-weight:900;line-height:1}
 .letter{font-size:76px;font-weight:900;line-height:1}
-.code{background:var(--code);border:1px solid var(--line);border-radius:14px;padding:18px 22px;font-family:'JetBrains Mono',monospace;font-size:17px;line-height:1.55;color:#cfe0ff;white-space:pre-wrap}
+.code{background:var(--code);border:1px solid var(--line);border-radius:14px;padding:18px 22px;font-family:'JetBrains Mono',monospace;font-size:21px;line-height:1.55;color:#cfe0ff;white-space:pre-wrap}
 :root[data-theme=light] .code{color:#cfe0ff}
 .code .k{color:var(--or)}.code .c{color:#7a8bb3}.code .g{color:var(--gr)}
 .steps{display:grid;gap:14px;counter-reset:s}
 .steps>div{counter-increment:s;display:flex;gap:18px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 20px}
-.steps>div:before{content:counter(s);flex:none;width:40px;height:40px;border-radius:50%;background:var(--bl);color:#fff;font-weight:900;font-size:20px;display:flex;align-items:center;justify-content:center}
-.steps p{font-size:20px}.steps b{font-size:21px}
+.steps>div:before{content:counter(s);flex:none;width:46px;height:46px;border-radius:50%;background:var(--bl);color:#fff;font-weight:900;font-size:22px;display:flex;align-items:center;justify-content:center}
+.steps p{font-size:24px}.steps b{font-size:26px}
+.steps{gap:10px}.steps>div{padding:10px 20px}.steps p{line-height:1.3}
+.steps:has(>div:nth-child(5)) p{font-size:22px}.steps:has(>div:nth-child(5)) b{font-size:24px}.steps:has(>div:nth-child(5))>div{padding:8px 20px}
 .bar{display:flex;height:64px;border-radius:14px;overflow:hidden;font-weight:800;color:#0a1020}
-.bar div{display:flex;flex-direction:column;justify-content:center;padding:0 16px;font-size:14px}.bar div b{font-size:24px;color:#0a1020}
-table{width:100%;border-collapse:collapse;font-size:19px}
+.bar div{display:flex;flex-direction:column;justify-content:center;padding:0 16px;font-size:17px}.bar div b{font-size:28px;color:#0a1020}
+table{width:100%;border-collapse:collapse;font-size:23px}
 th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line)}
-th{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--or)}
+th{font-size:16px;letter-spacing:.1em;text-transform:uppercase;color:var(--or)}
 td{color:var(--mut)}td:first-child{color:var(--tx);font-weight:800}
-.quote{border-left:5px solid var(--or);padding:10px 22px;font-size:26px;font-weight:700;color:var(--tx)}
-.chip{display:inline-block;padding:5px 12px;border-radius:99px;font-size:14px;font-weight:800}
+.quote{border-left:5px solid var(--or);padding:10px 22px;font-size:30px;font-weight:700;color:var(--tx)}
+.chip{display:inline-block;padding:5px 12px;border-radius:99px;font-size:17px;font-weight:800}
 .div{align-items:flex-start;justify-content:center;gap:16px}
 .div .big{font-size:230px;font-weight:900;line-height:.8;color:transparent;-webkit-text-stroke:3px var(--bl);position:absolute;right:60px;top:70px;opacity:.55}
 .wow{margin-top:18px;background:linear-gradient(135deg,rgba(255,159,67,.18),rgba(255,107,157,.12));border:1px solid var(--or);border-radius:18px;padding:18px 26px;max-width:860px}
-.wow .kick{margin-bottom:4px}.wow p{color:var(--tx);font-size:23px;font-weight:700}
+.wow .kick{margin-bottom:4px}.wow p{color:var(--tx);font-size:27px;font-weight:700}
 .mock{background:#fff;border-radius:14px;overflow:hidden;color:#0e1730;border:1px solid var(--line)}
-.mock .top{background:#0e1730;color:#fff;padding:10px 16px;font-weight:800;display:flex;justify-content:space-between;font-size:16px}
-.mock table{font-size:15px}.mock td{color:#334}.mock td:first-child{color:#0e1730}.mock th{color:#6b7694}
-.st{padding:3px 10px;border-radius:99px;font-size:12px;font-weight:900}
+.mock .top{background:#0e1730;color:#fff;padding:10px 16px;font-weight:800;display:flex;justify-content:space-between;font-size:19px}
+.mock table{font-size:18px}.mock td{color:#334}.mock td:first-child{color:#0e1730}.mock th{color:#6b7694}
+.st{padding:3px 10px;border-radius:99px;font-size:15px;font-weight:900}
 .s-ok{background:#d9f7e8;color:#0d7a4a}.s-late{background:#ffe0e0;color:#b3261e}.s-act{background:#dfe8ff;color:#2848b0}
-.note{display:none;position:absolute;left:72px;right:72px;bottom:70px;background:#1b2a1f;border:1px solid var(--gr);color:#d6ffe8;border-radius:12px;padding:12px 18px;font-size:16px;line-height:1.4;z-index:5}
+.note{display:none;position:absolute;left:72px;right:72px;bottom:70px;background:#1b2a1f;border:1px solid var(--gr);color:#d6ffe8;border-radius:12px;padding:12px 18px;font-size:20px;line-height:1.4;z-index:5}
 body.notes .note{display:block}
 .sp{flex:1}
-#ui{position:fixed;left:0;right:0;bottom:0;height:46px;display:flex;align-items:center;gap:10px;padding:0 16px;background:rgba(10,16,32,.85);backdrop-filter:blur(8px);border-top:1px solid var(--line);z-index:20;transition:opacity .3s}
+#ui{position:fixed;left:0;right:0;bottom:0;height:52px;display:flex;align-items:center;gap:10px;padding:0 16px;background:rgba(10,16,32,.85);backdrop-filter:blur(8px);border-top:1px solid var(--line);z-index:20;transition:opacity .3s}
 #ui.hide{opacity:0}
-#ui button{background:var(--card);color:var(--tx);border:1px solid var(--line);border-radius:10px;padding:6px 12px;font:800 14px Nunito;cursor:pointer}
+#ui button{background:var(--card);color:var(--tx);border:1px solid var(--line);border-radius:10px;padding:6px 12px;font:800 16px Nunito;cursor:pointer}
 #ui button:hover{border-color:var(--or)}
 #pg{flex:1;height:6px;background:var(--line);border-radius:9px;overflow:hidden;cursor:pointer}#pgf{height:100%;width:0;background:linear-gradient(90deg,var(--or),var(--pk));transition:width .3s}
-#cnt{font:800 14px Nunito;color:var(--mut);min-width:64px;text-align:center}
+#cnt{font:800 16px Nunito;color:var(--mut);min-width:64px;text-align:center}
 #grid{position:fixed;inset:0;background:rgba(5,8,18,.96);z-index:30;display:none;overflow:auto;padding:30px}
 #grid.on{display:block}
 #grid .gi{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
@@ -148,7 +157,7 @@ add(`<div class="kick">3-dars · Amaliyot</div><h2>O'z <span class="or">jadvalin
 /* ===== 4-DARS ===== */
 div('4','Claude Code','Kompyuteringizdagi AI ishchi. O\'rnatish, buyruqlar va kompyuterni boshqarish.','Siz yozasiz «papkani tartibga sol» — AI o\'zi fayllarni ajratib chiqadi.');
 add(`<div class="kick">4-dars · Farq</div><h2>Chat va <span class="acc">Claude Code</span></h2><div class="grid g2"><div class="card"><span class="tag t-bl">Oddiy chat</span><h3>Maslahat beradi</h3><ul><li>Siz nusxa olasiz</li><li>Siz joylashtirasiz</li><li>Fayllarni ko'rmaydi</li></ul></div><div class="card hl"><span class="tag t-or">Claude Code</span><h3>O'zi bajaradi</h3><ul class="ok"><li>Papkangizdagi fayllarni o'qiydi</li><li>Fayl yozadi va tahrirlaydi</li><li>Dasturni ishga tushirib sinaydi</li></ul></div></div><p>Har muhim qadamdan oldin sizdan <b>ruxsat so'raydi</b>. Siz nazoratdasiz.</p>`);
-add(`<div class="kick">4-dars · O'rnatish</div><h2>Claude Code'ni <span class="or">o'rnatamiz</span></h2><div class="steps"><div><span><b>Pullik obuna kerak</b><p>claude.ai da Pro tarifi. Claude Code bepul akkauntda ishlamaydi.</p></span></div><div><span><b>Windows: PowerShell oching</b><p>Boshlash menyusida «PowerShell» deb qidiring.</p></span></div><div><span><b>Buyruqni kiriting</b><div class="code" style="margin-top:8px;font-size:15px">irm https://claude.ai/install.ps1 | iex</div></span></div><div><span><b>Papkaga kirib ishga tushiring</b><p>Brauzer ochiladi, Google akkaunt bilan kirasiz.</p></span></div></div>`,'Buyruq o\'zgargan bo\'lishi mumkin. Dars oldidan docs.claude.com sahifasidan o\'rnatish buyrug\'ini tekshiring. Mac uchun alohida buyruq bor.');
+add(`<div class="kick">4-dars · O'rnatish</div><h2>Claude Code'ni <span class="or">o'rnatamiz</span></h2><div class="steps"><div><span><b>Pullik obuna kerak</b><p>claude.ai da Pro tarifi. Claude Code bepul akkauntda ishlamaydi.</p></span></div><div><span><b>Windows: PowerShell oching</b><p>Boshlash menyusida «PowerShell» deb qidiring.</p></span></div><div><span><b>Buyruqni kiriting</b><div class="code" style="margin-top:8px;font-size:19px">irm https://claude.ai/install.ps1 | iex</div></span></div><div><span><b>Papkaga kirib ishga tushiring</b><p>Brauzer ochiladi, Google akkaunt bilan kirasiz.</p></span></div></div>`,'Buyruq o\'zgargan bo\'lishi mumkin. Dars oldidan docs.claude.com sahifasidan o\'rnatish buyrug\'ini tekshiring. Mac uchun alohida buyruq bor.');
 add(`<div class="kick">4-dars · Birinchi qadam</div><h2>Papka yaratamiz va <span class="acc">boshlaymiz</span></h2><div class="code"><span class="c"># Hujjatlar ichida yangi papka</span>
 <span class="g">mkdir</span> korxona
 <span class="g">cd</span> korxona
@@ -195,6 +204,8 @@ add(`<div class="kick">6-dars · Kelgusi yo'l</div><h2>Keyingi <span class="gr">
 add(`<div class="kick">6-dars · Himoya</div><h2>Yakuniy <span class="or">himoya</span></h2><div class="steps"><div><span><b>5 daqiqa</b><p>Har kim o'z dasturini ko'rsatadi.</p></span></div><div><span><b>Nima tejaydi?</b><p>Soat va pulda taxminiy hisob.</p></span></div><div><span><b>Keyingi qadam</b><p>Qaysi ishni keyingi bo'lib AI ga topshiramiz?</p></span></div></div>`);
 add(`<div class="kick">Tabriklaymiz</div><h1>Endi siz <span class="acc">AI bilan</span><br>ishlay olasiz</h1><p class="lead">4 kishi, 6 dars, o'z dasturingiz. Savol bo'lsa, ustoz doim aloqada.</p><div class="grid g3"><div class="card"><span class="tag t-or">Sertifikat</span><p>Kurs bitirganlik haqida.</p></div><div class="card"><span class="tag t-bl">Yordam</span><p>Kursdan keyin ham savollarga javob.</p></div><div class="card"><span class="tag t-gr">Ustoz</span><p>Ilhomjon</p></div></div>`);
 
+add(`<div class="kick">Aloqa</div><h2>Ustoz bilan <span class="acc">bog'laning</span></h2><p class="lead">Ilhomjon Ibragimov, Codial o'quv markazi. Savol bo'lsa, yozing yoki qo'ng'iroq qiling.</p><div class="grid g2"><div class="card hl"><span class="tag t-or">Telefon</span><h3><a href="tel:+998998204432">+998 (99) 820-44-32</a></h3></div><div class="card"><span class="tag t-bl">Telegram</span><h3><a href="https://t.me/codialuz" target="_blank" rel="noopener">@codialuz</a></h3></div><div class="card"><span class="tag t-pk">Instagram</span><h3><a href="https://www.instagram.com/codialuz/" target="_blank" rel="noopener">@codialuz</a></h3></div><div class="card"><span class="tag t-gr">Sayt</span><h3><a href="https://www.codialinfo.uz/" target="_blank" rel="noopener">codialinfo.uz</a></h3></div></div>`);
+
 /* ===== ENGINE ===== */
 const st=document.getElementById('stage'),gi=document.getElementById('gi');
 S.forEach((s,i)=>{const d=document.createElement('section');d.className='slide '+s.cls;d.innerHTML=s.h+(s.n?`<div class="note"><b>Ustoz uchun:</b> ${s.n}</div>`:'');st.appendChild(d);
@@ -202,10 +213,11 @@ S.forEach((s,i)=>{const d=document.createElement('section');d.className='slide '
  const b=document.createElement('button');b.innerHTML=`<small>${i+1}. ${k}</small>${t}`;b.onclick=()=>{go(i);gridT(false)};gi.appendChild(b)});
 const sl=[...st.children];let cur=0;
 function go(i){cur=Math.max(0,Math.min(sl.length-1,i));sl.forEach((e,j)=>e.classList.toggle('on',j===cur));document.getElementById('pgf').style.width=((cur+1)/sl.length*100)+'%';document.getElementById('cnt').textContent=(cur+1)+' / '+sl.length;try{history.replaceState(null,'','#'+(cur+1))}catch(e){}}
-function fit(){const s=Math.min(innerWidth/1280,(innerHeight-46)/720);st.style.transform=`scale(${s})`;document.getElementById('viewport').style.bottom='46px'}
+function fit(){const s=Math.min(innerWidth/1280,(innerHeight-52)/720);st.style.transform=`scale(${s})`;document.getElementById('viewport').style.bottom='52px'}
 addEventListener('resize',fit);fit();
 function gridT(v){document.getElementById('grid').classList.toggle('on',v)}
-const th=()=>{const r=document.documentElement;r.dataset.theme=r.dataset.theme==='light'?'dark':'light'};
+try{const sv=localStorage.getItem('theme');if(sv)document.documentElement.dataset.theme=sv}catch(e){}
+const th=()=>{const r=document.documentElement;r.dataset.theme=r.dataset.theme==='light'?'dark':'light';try{localStorage.setItem('theme',r.dataset.theme)}catch(e){}};
 const fs=()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen().catch(()=>{});
 addEventListener('keydown',e=>{const k=e.key;
  if(['ArrowRight','PageDown',' ','Enter'].includes(k)){e.preventDefault();go(cur+1)}
