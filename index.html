@@ -140,6 +140,25 @@ button{font-family:inherit}
 .nextl{margin:10px 0 40px}
 @media(max-width:900px){.cards{grid-template-columns:1fr 1fr}.contact{grid-template-columns:1fr 1fr}.ol{grid-template-columns:1fr}.hs .g3,.hs .g4,.hs .g2{grid-template-columns:1fr 1fr}.hs h1{font-size:44px}}
 @media(max-width:600px){.cards,.contact,.hs .g3,.hs .g4,.hs .g2{grid-template-columns:1fr}.hs h1{font-size:36px}.hs h2{font-size:30px}.lhead .tt h1{font-size:26px}}
+
+.quizs{justify-content:flex-start;padding-top:46px}
+.qz{display:flex;flex-direction:column;gap:16px}
+.qz-q{font-size:34px;font-weight:900;line-height:1.2;color:var(--tx)}
+.qz-o{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.qo{text-align:left;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 18px;font:700 24px/1.25 Nunito,system-ui,sans-serif;color:var(--tx);cursor:pointer;display:flex;gap:14px;align-items:center;min-height:88px}
+.qo .l{flex:none;width:38px;height:38px;border-radius:50%;background:var(--line);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:19px}
+.qo:hover{border-color:var(--bl)}
+.qo.ok{border-color:var(--gr);background:rgba(62,207,142,.16)}.qo.ok .l{background:var(--gr);color:#fff}
+.qo.no{border-color:var(--pk);background:rgba(255,107,157,.14)}.qo.no .l{background:var(--pk);color:#fff}
+.qo.dim{opacity:.55}.qo:disabled{cursor:default}
+.qz-f{display:flex;gap:18px;align-items:center;min-height:64px}
+.qz-p{flex:none;font-weight:800;font-size:20px;color:var(--mut);min-width:120px}
+.qz-e{flex:1;font-size:22px;line-height:1.3;color:var(--tx);font-weight:700}
+.qz-next{flex:none;background:var(--or);color:#fff;border:0;border-radius:14px;padding:12px 24px;font:900 22px Nunito,system-ui,sans-serif;cursor:pointer}
+.qz-res{text-align:center;display:flex;flex-direction:column;gap:14px;align-items:center;padding-top:10px}
+.qz-res .big2{font-size:110px;font-weight:900;line-height:1;color:var(--gr)}
+.qz-res p{font-size:30px;color:var(--tx);font-weight:700}
+.k-quiz{background:#7c3aed}
 </style>
 </head>
 <body>
@@ -148,6 +167,9 @@ button{font-family:inherit}
 const S=[],LES=[]; // slides
 const add=(h,n,cls)=>S.push({h,n:n||'',cls:cls||''});
 const div=(n,t,goal,wow,note)=>{LES[n-1]={t,goal,wow,start:S.length};add(`<div class="big">${n}</div><div class="kick">${n}-dars</div><h1>${t}</h1><p class="lead">${goal}</p><div class="wow"><div class="kick">Bugungi «VAU»</div><p>${wow}</p></div>`,note,'div');}
+const QZ={"1": [{"q": "AI haqida qaysi gap to'g'ri?", "o": ["U hech qachon xato qilmaydi", "U sizning korxonangizni oldindan biladi", "Ishonch bilan noto'g'ri gapirishi mumkin, shuning uchun narx va raqamni tekshiramiz", "Unga parol va karta raqamini yozsa bo'ladi"], "a": 2, "e": "AI xato qilishi mumkin. Narx va raqamni doim o'zingiz tekshiring."}, {"q": "R-V-K-F formulasida «K» nimani bildiradi?", "o": ["Kontekst: vaziyat, kim uchun, narx, maqsad", "Kod", "Kalit", "Kirish"], "a": 0, "e": "R-Rol, V-Vazifa, K-Kontekst, F-Format. Kontekst bo'lmasa, AI taxmin qiladi."}, {"q": "Qaysi so'rov yaxshi javob beradi?", "o": ["Opalubka haqida yoz", "Xabar yoz", "Yoz, tezroq", "Sen ijara sotuvchisisan. Mijozga opalubka ijarasi haqida 5 qatorlik xabar yoz. Narx kuniga 3 000 so'm. Telegram uchun."], "a": 3, "e": "Ikkinchisida rol, vazifa, kontekst va format bor."}, {"q": "Qaysi ma'lumotni AI chatiga yozmaymiz?", "o": ["Yangi mahsulot nomi", "Parol va karta raqami", "Ijara e'lonining matni", "Telegram uchun savol"], "a": 1, "e": "Parol, karta raqami va mijoz sirlari AI chatiga yozilmaydi."}], "2": [{"q": "Xitoycha dastgoh pasportini o'zbekchaga o'girish uchun nima qilamiz?", "o": ["Sotuvchidan so'raymiz va ko'r-ko'rona ishonamiz", "Pasportni rasmga olib, Gemini yoki ChatGPT ga yuboramiz", "Pasportni tashlab qo'yamiz", "Faqat rasm chizdiramiz"], "a": 1, "e": "Rasm olib «xitoycha yozuvni o'zbekchaga tarjima qil» deb so'raymiz."}, {"q": "Deep Research (chuqur qidiruv) nima qiladi?", "o": ["Dastgohni o'zi sotib oladi", "Bitta saytni ochib beradi", "O'nlab saytni o'qib, manbali hisobot yozadi", "Faqat tarjima qiladi"], "a": 2, "e": "U ko'p manbani o'qiydi va havolalar bilan hisobot beradi."}, {"q": "Qaysi belgi sotuvchi xavfli ekanini bildiradi?", "o": ["Narx bozordan ancha past va faqat oldindan to'lov so'raydi", "Kompaniya ko'p yildan beri ishlaydi", "Haqiqiy sharh va videolar bor", "Ehtiyot qism kafolati bor"], "a": 0, "e": "Juda arzon narx, oldindan to'lov va shoshiltirish xavf belgisi."}, {"q": "AI tuzgan solishtirish jadvalidagi raqamlarni nima qilamiz?", "o": ["Hammasiga ishonamiz", "Kamida bir nechtasini manbadan o'zimiz tekshiramiz", "Jadvalni o'chirib tashlaymiz", "Sotuvchiga yuboramiz"], "a": 1, "e": "AI to'ldiradi, raqamlarni esa siz manba bilan tekshirasiz."}], "3": [{"q": "AI yozgan shartnoma qoralamasini imzolashdan oldin nima qilamiz?", "o": ["Darrov imzolaymiz", "Mijozga yuboramiz", "Yurist yoki mutaxassisga ko'rsatamiz", "AI ga «xato yo'q» deb yozdiramiz"], "a": 2, "e": "AI qoralama beradi, javobgarlik esa sizda. Yurist ko'rsin."}, {"q": "B2 olingan sana, C2 qaytgan sana, D2 kunlik narx. Ijara summasi formulasi qaysi?", "o": ["=B2+C2+D2", "=(C2-B2)*D2", "=C2+D2", "=B2*D2"], "a": 1, "e": "Qaytgan sanadan olingan sanani ayirsak, kunlar chiqadi. Uni narxga ko'paytiramiz."}, {"q": "200 ta mahsulotga 15% ustama qo'yish kerak. Nima qilamiz?", "o": ["Har birini qo'lda hisoblaymiz", "Jadvalni tushuntirib, formulani AI ga yozdiramiz", "Ustamani qo'ymaymiz", "Narxlarni taxminan yozamiz"], "a": 1, "e": "Ustunlarni tushuntiring, AI formulani beradi. 3 ta qatorni qo'lda tekshiring."}, {"q": "Mijozlar jadvalini AI ga yuklashdan oldin nima qilamiz?", "o": ["Telefon va shaxsiy ma'lumotni o'chiramiz", "Hech narsa qilmaymiz", "Parolni qo'shamiz", "Jadvalni chop etamiz"], "a": 0, "e": "Mijozlarning telefon va shaxsiy ma'lumotini yuklamaymiz."}], "4": [{"q": "Claude Code oddiy chatdan nimasi bilan farq qiladi?", "o": ["Faqat maslahat beradi", "Papkangizdagi fayllarni o'qiydi, yozadi va dasturni ishga tushirib sinaydi", "Faqat tarjima qiladi", "Internetsiz ishlaydi"], "a": 1, "e": "U kompyuteringizdagi papkada ishlaydi, muhim qadamdan oldin ruxsat so'raydi."}, {"q": "CLAUDE.md fayli nima uchun kerak?", "o": ["Rasm saqlash uchun", "Parollarni yozib qo'yish uchun", "Dasturni o'chirish uchun", "Korxona haqida bir marta yoziladi, AI har safar o'qiydi"], "a": 3, "e": "Bir marta yozasiz, qayta tushuntirib o'tirmaysiz."}, {"q": "Muhim fayllar bilan birinchi marta ishlayotganda nima qilamiz?", "o": ["Hamma narsaga «ha» deymiz", "Avval nusxa papkada mashq qilamiz", "Parolni papkaga yozamiz", "Rejani o'qimaymiz"], "a": 1, "e": "Avval nusxada mashq qiling, keyin haqiqiy fayllarda ishlang."}, {"q": "Ishlayotgan AI ni to'xtatish uchun qaysi tugma?", "o": ["/help", "Esc", "/init", "/resume"], "a": 1, "e": "Esc ishlayotgan AI ni to'xtatadi."}], "5": [{"q": "Vibe coding siklining to'g'ri tartibi qaysi?", "o": ["Yasash, sinash, talab, reja", "Sinash, reja, yasash, talab", "Talab, reja, yasash, sinash", "Reja, sinash, talab, yasash"], "a": 2, "e": "Talab yozamiz, reja tasdiqlaymiz, AI yasaydi, biz sinaymiz. Keyin yana reja."}, {"q": "Dastur ishlamasa, qaysi xabar AI ga yordam beradi?", "o": ["Ishlamayapti", "Tuzat", "Qaytarish bosilsa summa o'zgarmayapti", "Hammasi xato"], "a": 2, "e": "Nima bosilganini va nima bo'lmayotganini aniq yozing. Skrinshot ham foydali."}, {"q": "Ishingiz yo'qolib ketmasligi uchun nima qilamiz?", "o": ["Faqat brauzerga ishonamiz", "Fayl nusxasini «versiya1» deb saqlaymiz va ma'lumotni Excelga yuklab, Drive'ga qo'yamiz", "Hech narsa qilmaymiz", "Faylni o'chirib, qaytadan yozamiz"], "a": 1, "e": "Har qadamdan keyin nusxa saqlang, ma'lumotni ham zaxiralang."}, {"q": "Dasturning hisobini kim tekshiradi?", "o": ["AI o'zi, tekshirish shart emas", "Mijoz", "Hech kim", "Biz: kamida 3 ta misolni qo'lda hisoblaymiz"], "a": 3, "e": "Summa to'g'ri chiqishiga ishonch hosil qilish sizning ishingiz."}], "6": [{"q": "Telegram bot tokeni haqida qaysi gap to'g'ri?", "o": ["Uni do'stlarga yuborsa bo'ladi", "Bu parol: hech kimga va AI chatiga yozilmaydi", "Uni AI chatiga yozish shart", "Token kerak emas"], "a": 1, "e": "Token bu botning paroli. Claude Code'ga «.env faylga yoz» deb ayting."}, {"q": "Hammaga ochiq saytga nimani qo'ymaymiz?", "o": ["Kompaniya manzili", "Narx va mijoz ro'yxati kabi maxfiy narsani", "Ish vaqti", "Ijara shartlari umumiy matni"], "a": 1, "e": "GitHub Pages va Netlify ochiq. Maxfiy ma'lumot u yerga qo'yilmaydi."}, {"q": "Claude Code uchun qaysi obuna kerak?", "o": ["Hech qanday", "Pullik Claude Pro", "Faqat bepul akkaunt", "ChatGPT bepul"], "a": 1, "e": "Claude Code bepul akkauntda ishlamaydi. Narxni sayt orqali tekshiring."}, {"q": "Kursdan keyingi 1-haftada nima qilamiz?", "o": ["Har kuni AI bilan 1 ta ish vazifasini bajaramiz", "Dam olamiz", "Dasturni o'chirib tashlaymiz", "Obunani bekor qilamiz"], "a": 0, "e": "Har kungi kichik mashq ko'nikmani mustahkamlaydi."}]};
+const quiz=n=>add(`<div class="kick">${n}-dars · Viktorina</div><h2>Bilimingizni <span class="or">tekshiring</span></h2><div class="qz" data-n="${n}"></div>`,'Har kim javobni o\'zi tanlasin. Noto\'g\'ri javobda izohni birga o\'qing. Tugmalar: 1, 2, 3, 4.','quizs');
+
 
 /* ===== KIRISH ===== */
 add(`<div class="kick">Ro'zillo aka jamoasi uchun · 6 dars</div><h1>Sun'iy intellekt:<br><span class="acc">ish quroli</span></h1><p class="lead">Drabilka, xo'jalik mollari do'koni va opalubka ijarasi uchun amaliy kurs. AI ga yozishdan tortib, o'zingizning dasturingizni yasashgacha.</p><div class="grid g4" style="margin-top:10px"><div class="card"><span class="tag t-or">ChatGPT</span></div><div class="card"><span class="tag t-bl">Gemini</span></div><div class="card"><span class="tag t-gr">Claude</span></div><div class="card"><span class="tag t-pk">Claude Code</span></div></div>`,'Boshlashdan oldin: bu kurs nazariya emas, har dars oxirida korxonaga yaraydigan tayyor natija chiqadi. Shuni ayting.');
@@ -176,6 +198,8 @@ add(`<div class="kick">1-dars · Sehrli iboralar</div><h2>Natijani <span class="
 add(`<div class="kick">1-dars · Amaliyot</div><h2>3 ta vazifa. <span class="or">Har kim o'zi.</span></h2><div class="steps"><div><span><b>Drabilka</b><p>Mijozga: «Mahsulot narxi qimmat» deganiga xushmuomala javob yozing.</p></span></div><div><span><b>Xo'jalik mollari do'koni</b><p>Yangi mahsulot uchun Telegram e'lon: rasmga olib Gemini'ga bering.</p></span></div><div><span><b>Opalubka ijarasi</b><p>Mijozga ijara shartlari bilan narx xabari, 5 qator.</p></span></div></div>`,'Har bir vazifa uchun R-V-K-F ni shart qiling. Tayyor bo\'lganda bir-birinikini o\'qishsin.');
 add(`<div class="kick">1-dars · Yakun</div><h2>Uyga vazifa va <span class="gr">natija</span></h2><div class="grid g2"><div class="card"><span class="tag t-gr">Natija</span><h3>Bugun tayyor</h3><ul class="ok"><li>3 ta AI ga kirdingiz</li><li>R-V-K-F ni bilasiz</li><li>3 ta tayyor matn bor</li></ul></div><div class="card"><span class="tag t-or">Uyga vazifa</span><h3>Har kuni 10 daqiqa</h3><ul><li>Ish bo'yicha 5 ta savolni AI ga bering</li><li>Eng yaxshi so'rovingizni daftarga yozing</li><li>Keyingi darsga 1 ta rasm olib keling: dastgoh yoki mahsulot</li></ul></div></div>`);
 
+quiz(1);
+
 /* ===== 2-DARS ===== */
 div('2','Dunyo va Xitoy texnikasi','Yangi dastgohlarni topish, tarjima qilish va solishtirish. Sotuvchini tekshirish.','Xitoycha pasportli dastgoh rasmini olasiz va 10 soniyada o\'zbekcha tushuntirish chiqadi.');
 add(`<div class="kick">2-dars · Muammo</div><h2>Xitoy dastgohi: <span class="pk">4 ta qiyinchilik</span></h2><div class="grid g4"><div class="card"><h3>Til</h3><p>Pasport va yozuvlar xitoycha</p></div><div class="card"><h3>Tanlov</h3><p>Yuzlab model, qaysi biri?</p></div><div class="card"><h3>Narx</h3><p>Yetkazish, bojxona, kafolat hisobi</p></div><div class="card"><h3>Ishonch</h3><p>Sotuvchi haqiqiymi?</p></div></div><p><b>AI hammasiga yordam beradi.</b> Lekin oxirgi qarorni siz qabul qilasiz.</p>`);
@@ -192,6 +216,8 @@ add(`<div class="kick">2-dars · Yangiliklar</div><h2>Yangilikni <span class="gr
 add(`<div class="kick">2-dars · Amaliyot</div><h2>O'z <span class="or">hisobotingiz</span></h2><div class="steps"><div><span><b>Kerak uskunani tanlang</b><p>Masalan, yangi drabilka yoki do'kon uchun asbob.</p></span></div><div><span><b>Deep Research bering</b><p>R-V-K-F bilan to'liq so'rov yozing.</p></span></div><div><span><b>Jadval va tavsiyani oling</b><p>3 ta variant, narx, xavf, savollar ro'yxati.</p></span></div><div><span><b>Tekshiring</b><p>Kamida 3 ta raqamni manbadan o'zingiz tasdiqlang.</p></span></div></div>`);
 add(`<div class="kick">2-dars · Yakun</div><h2>AI xatosini <span class="pk">ushlash</span></h2><div class="grid g3"><div class="card"><div class="num or">1</div><h3>Manbani so'rang</h3><p>«Havola ber.» Havola ochilmasa, ishonmang.</p></div><div class="card"><div class="num acc">2</div><h3>Hisobni qayta qiling</h3><p>Narx va foizni kalkulyatorda tekshiring.</p></div><div class="card"><div class="num gr">3</div><h3>Ikkinchi AI ga ko'rsating</h3><p>«Bu javobda xato bormi?»</p></div></div><div class="card hl"><p><b>Uyga vazifa:</b> tanlagan uskuna bo'yicha sotuvchiga yuboriladigan 8 ta savol tuzing.</p></div>`);
 
+quiz(2);
+
 /* ===== 3-DARS ===== */
 div('3','Hujjat, jadval, hisobot','Shartnoma, narx ro\'yxati va ijara kalkulyatori. Excel/Sheets formulalarini AI yozadi.','Ijara kalkulyatori jadvali: sanani kiritasiz, summa o\'zi hisoblanadi.');
 add(`<div class="kick">3-dars · Hujjat</div><h2>Shartnoma va akt <span class="acc">5 daqiqada</span></h2><div class="code"><span class="k">ROL:</span> Sen qurilish uskunalari ijarasi bo'yicha menejersan.
@@ -205,6 +231,8 @@ add(`<div class="kick">3-dars · Opalubka</div><h2>Ijara <span class="gr">kalkul
 add(`<div class="kick">3-dars · Do'kon</div><h2>Narx ro'yxati va <span class="acc">ustama</span></h2><div class="grid g2"><div class="card"><h3>Muammo</h3><p>Tovar narxlari o'zgardi. 200 ta mahsulotga 15% ustama qo'yish kerak.</p></div><div class="card"><h3>AI yechimi</h3><p>«Tovar jadvalim bor: A – nomi, B – tannarx. C ustuniga 15% ustama bilan sotuv narxini hisobla va 100 ga yaxlitla.»</p></div></div><div class="card hl"><p><b>Qo'shimcha:</b> qoldiq 5 dan kam bo'lsa qizil rang bersin: «Shartli formatlash» ni AI ga tushuntirtiring.</p></div>`);
 add(`<div class="kick">3-dars · Tahlil</div><h2>Jadvalga <span class="pk">savol berasiz</span></h2><p class="lead">Excel faylni, PDF yoki rasmni AI ga yuklang va oddiy tilda so'rang:</p><div class="grid g2"><div class="card"><ul><li>«Qaysi mahsulot eng ko'p foyda keltirdi?»</li><li>«Qaysi mijoz qarzdor?»</li></ul></div><div class="card"><ul><li>«Oylar bo'yicha diagramma chiz»</li><li>«Menga 5 qatorlik xulosa yoz»</li></ul></div></div><div class="card hl"><p><b>Eslatma:</b> mijozlarning telefon va shaxsiy ma'lumotini AI ga yuklashdan oldin o'chiring.</p></div>`);
 add(`<div class="kick">3-dars · Amaliyot</div><h2>O'z <span class="or">jadvalingizni</span> yasang</h2><div class="steps"><div><span><b>Tanlang</b><p>Ijara kalkulyatori yoki narx ro'yxati.</p></span></div><div><span><b>Sheets'da jadval oching</b><p>Ustunlarni AI bilan rejalang.</p></span></div><div><span><b>Formulani AI dan oling</b><p>Kamida 3 ta formula ishlasin.</p></span></div><div><span><b>3 ta qatorni qo'lda tekshiring</b><p>Hisob to'g'rimi?</p></span></div></div><div class="card hl"><p><b>Uyga vazifa:</b> haqiqiy 10 ta ijara yozuvini jadvalga kiriting. 5-darsda aynan shu dasturga aylanadi.</p></div>`);
+
+quiz(3);
 
 /* ===== 4-DARS ===== */
 div('4','Claude Code','Kompyuteringizdagi AI ishchi. O\'rnatish, buyruqlar va kompyuterni boshqarish.','Siz yozasiz «papkani tartibga sol» — AI o\'zi fayllarni ajratib chiqadi.');
@@ -228,6 +256,8 @@ add(`<div class="kick">4-dars · Boshqarish</div><h2>Kompyuterni <span class="gr
 add(`<div class="kick">4-dars · Amaliyot</div><h2>Fayllarni <span class="or">tartibga solamiz</span></h2><div class="steps"><div><span><b>Test papka yarating</b><p>Ichiga 15 ta turli fayl nusxasini soling: rasm, PDF, Excel.</p></span></div><div><span><b>Claude Code ni oching</b><p>Shu papkada <code>claude</code> yozing.</p></span></div><div><span><b>Buyruq bering</b><p>«Fayllarni turi bo'yicha papkalarga ajrat. Avval reja ko'rsat.»</p></span></div><div><span><b>Rejani o'qing, tasdiqlang</b><p>Natijani tekshiring.</p></span></div></div>`);
 add(`<div class="kick">4-dars · Yakun</div><h2>Bugun <span class="gr">nima qildik</span></h2><div class="grid g2"><ul class="ok"><li>Claude Code o'rnatildi</li><li>Birinchi papka ishladi</li><li>CLAUDE.md yozildi</li></ul><ul class="ok"><li>Fayllar AI bilan tartiblandi</li><li>Xavfsizlik qoidalari tushunildi</li></ul></div><div class="card hl"><p><b>Uyga vazifa:</b> 3-darsdagi ijara jadvalini papkaga qo'ying. Keyingi dars shu asosda dastur yasaymiz.</p></div>`);
 
+quiz(4);
+
 /* ===== 5-DARS ===== */
 div('5','1-dastur: ijara tizimi','Kod yozmasdan, Claude Code bilan opalubka ijarasini hisoblaydigan dastur yasaymiz.','Telefoningizdan ochiladigan, qarzdorlarni ko\'rsatadigan o\'z dasturingiz.');
 add(`<div class="kick">5-dars · Maqsad</div><h2>Dastur <span class="acc">nima qiladi</span></h2><div class="mock"><div class="top"><span>Opalubka ijarasi</span><span>+ Yangi ijara</span></div><table><tr><th>Mijoz</th><th>Mahsulot</th><th>Soni</th><th>Qaytish</th><th>Summa</th><th>Holat</th></tr><tr><td>Brigada 1</td><td>Plita</td><td>40</td><td>10.12</td><td>1 080 000</td><td><span class="st s-ok">Qaytarildi</span></td></tr><tr><td>Brigada 2</td><td>Tayanch</td><td>20</td><td>15.12</td><td>420 000</td><td><span class="st s-act">Ijarada</span></td></tr><tr><td>Brigada 3</td><td>Plita</td><td>30</td><td>05.12</td><td>600 000</td><td><span class="st s-late">Kechikdi</span></td></tr></table></div><p>Maket shunga o'xshash bo'ladi. Aniq ko'rinishini AI bilan birga o'zingiz belgilaysiz.</p>`);
@@ -244,6 +274,8 @@ add(`<div class="kick">5-dars · Xatolar</div><h2>Ishlamasa <span class="pk">nim
 add(`<div class="kick">5-dars · Zaxira</div><h2>Ishingizni <span class="gr">saqlaymiz</span></h2><div class="grid g2"><div class="card"><h3>Har qadamdan keyin</h3><p>Fayl nusxasini «versiya1», «versiya2» nomi bilan saqlang yoki Claude Code'dan «Git bilan saqla» deb so'rang.</p></div><div class="card"><h3>Ma'lumot zaxirasi</h3><p>Excelga yuklab, Google Drive'ga qo'yib turing. Brauzer tozalansa, ma'lumot yo'qolmasin.</p></div></div>`);
 add(`<div class="kick">5-dars · Amaliyot</div><h2>Dasturni <span class="or">yakunlaymiz</span></h2><div class="steps"><div><span><b>3-darsdagi haqiqiy yozuvlarni kiriting</b></span></div><div><span><b>Telefonda oching</b><p>Faylni o'zingizga yuboring yoki Drive'dan oching.</p></span></div><div><span><b>Bitta yangi imkoniyat qo'shing</b><p>O'zingiz o'ylab toping. Masalan: mijozga WhatsApp xabar tugmasi.</p></span></div></div><div class="card hl"><p><b>Uyga vazifa:</b> haftasiga 5 ta haqiqiy ijarani shu dasturga yozing va nima qulay emasligini belgilang.</p></div>`);
 
+quiz(5);
+
 /* ===== 6-DARS ===== */
 div('6','2-dastur va chiqarish','O\'zingiz tanlagan dastur: do\'kon, drabilka yoki bot. Keyin himoya va sertifikat.','Har kim 5 daqiqada o\'z dasturini ko\'rsatadi. Ro\'zillo aka birinchi bo\'lib o\'z biznesi dasturini ishga tushiradi.');
 add(`<div class="kick">6-dars · Tanlov</div><h2>Qaysi <span class="acc">dastur</span> yasaymiz</h2><div class="grid g3"><div class="card"><span class="tag t-or">Do'kon</span><h3>Tovar qoldig'i</h3><p>Kirim, chiqim, kam qolgan tovar ro'yxati.</p></div><div class="card"><span class="tag t-bl">Drabilka</span><h3>Tannarx kalkulyatori</h3><p>Xomashyo, elektr, ish haqi kirsa, tannarx va foyda chiqadi.</p></div><div class="card"><span class="tag t-gr">Telegram bot</span><h3>Narx boti</h3><p>Mijoz bot orqali narx va ijara shartlarini so'raydi.</p></div></div>`);
@@ -254,6 +286,7 @@ add(`<div class="kick">6-dars · Xavfsizlik</div><h2>6 ta <span class="pk">oltin
 add(`<div class="kick">6-dars · Obunalar</div><h2>Qaysi obuna <span class="or">kerak</span></h2><div class="card"><table><tr><th>Xizmat</th><th>Taxminiy narx</th><th>Kerakmi</th></tr><tr><td>Claude Pro</td><td>~$20/oy</td><td>Ha, Claude Code uchun</td></tr><tr><td>ChatGPT, Gemini</td><td>Bepul variant bor, pullisi ~$20/oy</td><td>Boshida bepuli yetadi</td></tr></table></div><p>Narxlar o'zgarishi mumkin. Sayt orqali tekshiring. Obunani korxona hisobidan olish va har kimga alohida akkaunt ochish tavsiya.</p>`);
 add(`<div class="kick">6-dars · Kelgusi yo'l</div><h2>Keyingi <span class="gr">30 kun</span></h2><div class="grid g3"><div class="card"><span class="tag t-or">1-hafta</span><p>Har kuni AI bilan 1 ta ish vazifasi.</p></div><div class="card"><span class="tag t-bl">2-hafta</span><p>Ijara dasturini haqiqiy ishda ishlating.</p></div><div class="card"><span class="tag t-gr">3-hafta</span><p>Yangi imkoniyat qo'shing. Do'kon yoki drabilka.</p></div></div><div class="card hl"><p><b>4-hafta:</b> hammasi nimani tejaganini sanang. Soat va pulda. Natijani birga ko'ramiz.</p></div>`);
 add(`<div class="kick">6-dars · Himoya</div><h2>Yakuniy <span class="or">himoya</span></h2><div class="steps"><div><span><b>5 daqiqa</b><p>Har kim o'z dasturini ko'rsatadi.</p></span></div><div><span><b>Nima tejaydi?</b><p>Soat va pulda taxminiy hisob.</p></span></div><div><span><b>Keyingi qadam</b><p>Qaysi ishni keyingi bo'lib AI ga topshiramiz?</p></span></div></div>`);
+quiz(6);
 add(`<div class="kick">Tabriklaymiz</div><h1>Endi siz <span class="acc">AI bilan</span><br>ishlay olasiz</h1><p class="lead">4 kishi, 6 dars, o'z dasturingiz. Savol bo'lsa, ustoz doim aloqada.</p><div class="grid g3"><div class="card"><span class="tag t-or">Sertifikat</span><p>Kurs bitirganlik haqida.</p></div><div class="card"><span class="tag t-bl">Yordam</span><p>Kursdan keyin ham savollarga javob.</p></div><div class="card"><span class="tag t-gr">Ustoz</span><p>Ilhomjon</p></div></div>`);
 
 add(`<div class="kick">Aloqa</div><h2>Ustoz bilan <span class="acc">bog'laning</span></h2><p class="lead">Ilhomjon Ibragimov, Codial o'quv markazi. Savol bo'lsa, yozing yoki qo'ng'iroq qiling.</p><div class="grid g2"><div class="card hl"><span class="tag t-or">Telefon</span><h3><a href="tel:+998998204432">+998 (99) 820-44-32</a></h3></div><div class="card"><span class="tag t-bl">Telegram</span><h3><a href="https://t.me/codialuz" target="_blank" rel="noopener">@codialuz</a></h3></div><div class="card"><span class="tag t-pk">Instagram</span><h3><a href="https://www.instagram.com/codialuz/" target="_blank" rel="noopener">@codialuz</a></h3></div><div class="card"><span class="tag t-gr">Sayt</span><h3><a href="https://www.codialinfo.uz/" target="_blank" rel="noopener">codialinfo.uz</a></h3></div></div>`);
@@ -263,11 +296,11 @@ add(`<div class="kick">Aloqa</div><h2>Ustoz bilan <span class="acc">bog'laning</
 const TAGS=[["Google akkaunt","R-V-K-F formulasi","ChatGPT, Gemini, Claude"],["Rasmdan tarjima","Deep Research","Dastgohlarni solishtirish"],["Shartnoma","Sheets formulalari","Ijara kalkulyatori"],["O'rnatish","CLAUDE.md","Kompyuterni boshqarish"],["Vibe coding","Ijara dasturi","Zaxira"],["Do'kon yoki drabilka","Telegram bot","Yakuniy himoya"]];
 const MODULES=[{n:1,t:"AI bilan ishlash",d:"Chatda to'g'ri yozish, Xitoy texnikasini topish, hujjat va jadval tayyorlash.",l:[1,2,3]},{n:2,t:"Claude Code va o'z dasturingiz",d:"Kompyuteringizdagi AI ishchi, ijara tizimi va ikkinchi dastur.",l:[4,5,6]}];
 const CO={phone:'+998 (99) 820-44-32',tel:'tel:+998998204432',site:'https://www.codialinfo.uz/',tg:'https://t.me/codialuz',ig:'https://www.instagram.com/codialuz/'};
-const KINDS={theory:'Nazariya',task:'Amaliyot',safe:'Xavfsizlik',end:'Yakun va vazifa',cover:'Dars boshi'};
+const KINDS={theory:'Nazariya',task:'Amaliyot',safe:'Xavfsizlik',end:'Yakun va vazifa',quiz:'Viktorina',cover:'Dars boshi'};
 /* lesson k: slides from its div() up to the next div(); the last lesson also gets the closing slides */
 const lessonSlides=n=>{const a=LES[n-1].start,b=n<LES.length?LES[n].start:S.length;return S.slice(a,b)};
 const text=h=>{const d=document.createElement('div');d.innerHTML=h;return d};
-const kindOf=s=>{if(s.cls==='div')return 'cover';const k=(text(s.h).querySelector('.kick')||{}).textContent||'';
+const kindOf=s=>{if(s.cls==='div')return 'cover';if(s.cls==='quizs')return 'quiz';const k=(text(s.h).querySelector('.kick')||{}).textContent||'';
  if(/Amaliyot/i.test(k))return 'task';if(/Xavfsizlik/i.test(k))return 'safe';if(/Yakun|Himoya|Kelgusi|Tabrik|Aloqa/i.test(k))return 'end';return 'theory'};
 const titleOf=s=>{const t=text(s.h).querySelector('h1,h2');return t?t.textContent:''};
 const kickOf=s=>((text(s.h).querySelector('.kick')||{}).textContent||'').replace(/^\d+-dars\s*·?\s*/,'');
@@ -302,7 +335,7 @@ function openLesson(n,idx){
  <div class="lhead"><a class="btn" href="#">← Barcha darslar</a><div class="tt"><small>${n}-DARS</small><h1>${L.t}</h1></div><button class="btn" id="bt">Eslatmalar</button><button class="btn" id="thm">Mavzu</button></div>
  <div id="player"><div id="stage"></div></div>
  <div id="ctl"><button class="btn" id="bp">←</button><div class="dots" id="dots"></div><span id="cnt"></span><button class="btn" id="bn">→</button><button class="btn" id="bf" title="To'liq ekran (F)">⛶</button></div>
- <div class="legend">${['theory','task','safe','end'].map(k=>`<span><i class="k-${k}"></i>${KINDS[k]}</span>`).join('')}</div>
+ <div class="legend">${['theory','task','safe','quiz','end'].map(k=>`<span><i class="k-${k}"></i>${KINDS[k]}</span>`).join('')}</div>
  <section class="outline"><h2>Bu darsda</h2><div class="ol" id="ol"></div></section>
  <div class="nextl" id="nextl"></div><div class="foot"></div></div>`;
  const st=document.getElementById('stage'),dots=document.getElementById('dots'),ol=document.getElementById('ol'),pl=document.getElementById('player');
@@ -312,6 +345,7 @@ function openLesson(n,idx){
  const nx=LES[n];document.getElementById('nextl').innerHTML=nx?`<button class="lcard" data-go="${n+1}" style="width:100%"><span class="chips"><span class="chip">Keyingi dars</span></span><h3>${n+1}-dars: ${nx.t}</h3><p>${nx.goal}</p></button>`:'';
  document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{location.hash='dars-'+b.dataset.go});
  const sls=[...st.children];
+ st.querySelectorAll('.qz').forEach(Q.init);
  window.go=function(i){cur=Math.max(0,Math.min(sls.length-1,i));sls.forEach((e,j)=>e.classList.toggle('on',j===cur));
   [...dots.children].forEach((e,j)=>e.classList.toggle('on',j===cur));[...ol.children].forEach((e,j)=>e.classList.toggle('on',j===cur));
   document.getElementById('cnt').textContent=(cur+1)+' / '+sls.length;
@@ -327,6 +361,7 @@ function openLesson(n,idx){
  let tx=0;pl.addEventListener('touchstart',e=>tx=e.touches[0].clientX,{passive:true});
  pl.addEventListener('touchend',e=>{const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>50)go(cur+(d<0?1:-1))});
  keyH=e=>{const k=e.key;if(e.ctrlKey||e.metaKey||e.altKey)return;
+  if(/^[1-4]$/.test(k)){const b=document.querySelectorAll('.slide.on .qo')[+k-1];if(b){b.click();return}}
   if(['ArrowRight','PageDown',' ','Enter'].includes(k)){e.preventDefault();go(cur+1)}
   else if(['ArrowLeft','PageUp','Backspace'].includes(k)){e.preventDefault();go(cur-1)}
   else if(k==='Home')go(0);else if(k==='End')go(sls.length-1);
@@ -335,6 +370,27 @@ function openLesson(n,idx){
  fit();go(Math.max(0,(idx||1)-1));
 }
 addEventListener('keydown',e=>{if(keyH)keyH(e)});
+
+
+/* ===== VIKTORINA ===== */
+const Q={
+ init(el){const n=+el.dataset.n,qs=QZ[n];let i=0,sc=0,ans=false;
+  const L='ABCD';
+  const draw=()=>{
+   if(i>=qs.length){
+    const msg=sc===qs.length?'Ajoyib! Hammasi to\'g\'ri.':sc>=qs.length-1?'Juda yaxshi!':sc>=2?'Yaxshi. Xato qilingan joylarni darsdan qayta ko\'ring.':'Darsni yana bir bor ko\'rib chiqing, keyin qayta urinib ko\'ring.';
+    el.innerHTML=`<div class="qz-res"><div class="big2">${sc} / ${qs.length}</div><p>${msg}</p><button class="qz-next" data-act="again">Qayta urinish</button></div>`;
+    el.querySelector('[data-act=again]').onclick=()=>{i=0;sc=0;draw()};return}
+   const q=qs[i];ans=false;
+   el.innerHTML=`<div class="qz-q">${q.q}</div><div class="qz-o">${q.o.map((t,j)=>`<button class="qo" data-j="${j}"><span class="l">${L[j]}</span><span>${t}</span></button>`).join('')}</div><div class="qz-f"><div class="qz-p">Savol ${i+1} / ${qs.length}</div><div class="qz-e"></div><button class="qz-next" style="visibility:hidden">${i+1<qs.length?'Keyingi savol →':'Natijani ko\'rish'}</button></div>`;
+   const nx=el.querySelector('.qz-next');
+   nx.onclick=()=>{i++;draw()};
+   el.querySelectorAll('.qo').forEach(b=>b.onclick=()=>{if(ans)return;ans=true;const j=+b.dataset.j,ok=j===q.a;if(ok)sc++;
+    el.querySelectorAll('.qo').forEach((x,k)=>{x.disabled=true;if(k===q.a)x.classList.add('ok');else if(k===j)x.classList.add('no');else x.classList.add('dim')});
+    el.querySelector('.qz-e').innerHTML=(ok?'<span class="gr">To\'g\'ri! </span>':'<span class="pk">Noto\'g\'ri. </span>')+q.e;nx.style.visibility='visible'});
+  };
+  draw()}
+};
 
 /* ===== MAVZU VA YO'NALTIRISH ===== */
 try{const sv=localStorage.getItem('theme');if(sv)document.documentElement.dataset.theme=sv}catch(e){}
