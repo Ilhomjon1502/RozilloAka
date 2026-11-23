@@ -1,6 +1,6 @@
 # Ro'zillo aka jamoasi uchun AI kursi: dastur va narx
 
-Mijoz: Ro'zillo aka korxonasi (drabilka, xo'jalik mollari do'koni, opalubka ijarasi). 4 kishi: Ro'zillo aka + 2 shogird (+1). Kurs: 6 dars, har biri 2-2,5 soat.
+Mijoz: Ro'zillo aka korxonasi (drabilka, xo'jalik mollari do'koni, opalubka ijarasi). 4 kishi: Ro'zillo aka + 2 shogird (+1). Kurs: 6 dars, har biri 1 soatdan 2 soatgacha.
 
 ## Darslar (qisqa)
 1. **AI bilan ishlash.** Google akkaunt orqali Gemini/ChatGPT/Claude'ga kirish, R-V-K-F (Rol, Vazifa, Kontekst, Format) formulasi. Amaliyot: mijozga xabar, do'kon e'loni, ijara narx xabari.
