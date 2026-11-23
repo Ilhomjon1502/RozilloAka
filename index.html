@@ -10,16 +10,11 @@
 <style>
 :root{--bg:#0a1020;--bg2:#0f1830;--card:#131d36;--line:#23304f;--tx:#eef2ff;--mut:#9aa8c9;--or:#ff9f43;--bl:#6b95ff;--gr:#3ecf8e;--pk:#ff6b9d;--code:#0a0f1d}
 :root[data-theme=light]{--bg:#f4f6fb;--bg2:#fff;--card:#fff;--line:#d3d9ea;--tx:#0e1730;--mut:#44506e;--code:#0e1730;--or:#d4690a;--bl:#2a55d4;--gr:#0f8a53;--pk:#d02e69}
-:root[data-theme=light] #stage{box-shadow:0 12px 50px rgba(30,50,100,.18);background:radial-gradient(1100px 600px at 85% -10%,rgba(42,85,212,.10),transparent 60%),radial-gradient(900px 500px at -10% 110%,rgba(212,105,10,.08),transparent 60%),var(--bg)}
 :root[data-theme=light] .card{box-shadow:0 2px 10px rgba(30,50,100,.07)}
-:root[data-theme=light] #ui{background:rgba(255,255,255,.92)}
-:root[data-theme=light] #grid{background:rgba(244,246,251,.97)}
 :root[data-theme=light] .note{background:#e6f7ee;color:#0b3d27}
 :root[data-theme=light] .code .c{color:#8fa0c8}
+
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--tx);font-family:Nunito,system-ui,sans-serif}
-#viewport{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
-#stage{width:1280px;height:720px;position:relative;flex:none;transform-origin:center center;background:radial-gradient(1100px 600px at 85% -10%,rgba(107,149,255,.18),transparent 60%),radial-gradient(900px 500px at -10% 110%,rgba(255,159,67,.13),transparent 60%),var(--bg);border-radius:18px;overflow:hidden;box-shadow:0 20px 80px rgba(0,0,0,.45)}
 .slide{position:absolute;inset:0;padding:54px 72px 64px;display:none;flex-direction:column;justify-content:center;gap:22px}
 .slide.on{display:flex;animation:in .45s ease}
 @keyframes in{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:none}}
@@ -73,29 +68,86 @@ td{color:var(--mut)}td:first-child{color:var(--tx);font-weight:800}
 .note{display:none;position:absolute;left:72px;right:72px;bottom:70px;background:#1b2a1f;border:1px solid var(--gr);color:#d6ffe8;border-radius:12px;padding:12px 18px;font-size:20px;line-height:1.4;z-index:5}
 body.notes .note{display:block}
 .sp{flex:1}
-#ui{position:fixed;left:0;right:0;bottom:0;height:52px;display:flex;align-items:center;gap:10px;padding:0 16px;background:rgba(10,16,32,.85);backdrop-filter:blur(8px);border-top:1px solid var(--line);z-index:20;transition:opacity .3s}
-#ui.hide{opacity:0}
-#ui button{background:var(--card);color:var(--tx);border:1px solid var(--line);border-radius:10px;padding:6px 12px;font:800 16px Nunito;cursor:pointer}
-#ui button:hover{border-color:var(--or)}
-#pg{flex:1;height:6px;background:var(--line);border-radius:9px;overflow:hidden;cursor:pointer}#pgf{height:100%;width:0;background:linear-gradient(90deg,var(--or),var(--pk));transition:width .3s}
-#cnt{font:800 16px Nunito;color:var(--mut);min-width:64px;text-align:center}
-#grid{position:fixed;inset:0;background:rgba(5,8,18,.96);z-index:30;display:none;overflow:auto;padding:30px}
-#grid.on{display:block}
-#grid .gi{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
-#grid button{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:12px;padding:12px;text-align:left;font:700 14px Nunito;cursor:pointer;min-height:70px}
-#grid button small{display:block;color:var(--or);font-size:11px;letter-spacing:.1em;margin-bottom:4px}
-#grid button:hover{border-color:var(--bl)}
+html{background:var(--bg);scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:Nunito,system-ui,sans-serif;min-height:100vh}
+a{color:inherit}
+button{font-family:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 0}
+.brand{font-weight:900;font-size:19px;letter-spacing:.02em}
+.brand b{color:var(--or)}
+.btn{background:var(--card);color:var(--tx);border:1px solid var(--line);border-radius:12px;padding:10px 18px;font:800 17px Nunito,system-ui,sans-serif;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.btn:hover{border-color:var(--or)}
+.btn.pri{background:var(--or);border-color:var(--or);color:#fff}
+.btn.pri:hover{filter:brightness(1.06)}
+.eyebrow{font-size:16px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--or)}
+/* home */
+.hs h1{font-size:60px}.hs h2{font-size:40px}.hs h3{font-size:24px}.hs p,.hs li{font-size:21px}.hs .lead{font-size:24px}.hs .card p,.hs .card li{font-size:19px}
+.hs .num{font-size:52px}.hs .kick{font-size:16px}
+.hs{display:flex;flex-direction:column;gap:20px;padding:30px 0}
+.hs .big{display:none}
+.hero{padding:26px 0 8px;display:flex;flex-direction:column;gap:18px}
+.hero .actions{display:flex;gap:12px;flex-wrap:wrap}
+.module{padding:34px 0 8px}
+.module-h{display:flex;flex-direction:column;gap:6px;margin-bottom:18px}
+.module-h h2{font-size:38px}
+.module-h p{font-size:21px;color:var(--mut)}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.lcard{text-align:left;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:10px;cursor:pointer;color:var(--tx);font:inherit;transition:transform .15s,border-color .15s,box-shadow .15s;box-shadow:0 2px 10px rgba(30,50,100,.07)}
+.lcard:hover{transform:translateY(-3px);border-color:var(--bl);box-shadow:0 10px 26px rgba(30,50,100,.14)}
+.lcard .n{width:54px;height:54px;border-radius:16px;background:var(--bl);color:#fff;font-weight:900;font-size:28px;display:flex;align-items:center;justify-content:center}
+.lcard h3{font-size:26px;line-height:1.15}
+.lcard p{font-size:19px;line-height:1.4;color:var(--mut)}
+.lcard .meta{font-size:15px;font-weight:800;color:var(--mut);margin-top:auto}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.lcard .chip{background:rgba(42,85,212,.10);color:var(--bl);font-size:14px;padding:4px 10px}
+:root:not([data-theme=light]) .lcard .chip{background:rgba(107,149,255,.18)}
+.about{margin:44px 0 20px;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:30px 32px;display:flex;flex-direction:column;gap:14px}
+.about h2{font-size:36px}
+.about p{font-size:21px;color:var(--mut)}
+.contact{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:6px}
+.contact a{text-decoration:none;background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:16px 18px;display:flex;flex-direction:column;gap:6px}
+.contact a:hover{border-color:var(--or)}
+.contact small{font-size:14px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+.contact b{font-size:20px}
+.foot{padding:20px 0 50px;font-size:15px;color:var(--mut)}
+/* lesson view */
+.lhead{display:flex;align-items:center;gap:16px;padding:18px 0 14px;flex-wrap:wrap}
+.lhead .tt{flex:1;min-width:240px}
+.lhead .tt small{display:block;font-weight:900;letter-spacing:.14em;color:var(--or);font-size:14px}
+.lhead .tt h1{font-size:34px;line-height:1.1}
+#player{position:relative;width:100%;overflow:hidden;border-radius:20px;border:1px solid var(--line);box-shadow:0 12px 40px rgba(30,50,100,.16);background:var(--bg)}
+#player:fullscreen{border:0;border-radius:0;box-shadow:none}
+#stage{width:1280px;height:720px;position:absolute;left:0;top:0;transform-origin:0 0;background:radial-gradient(1100px 600px at 85% -10%,rgba(42,85,212,.10),transparent 60%),radial-gradient(900px 500px at -10% 110%,rgba(212,105,10,.08),transparent 60%),var(--bg);overflow:hidden}
+:root:not([data-theme=light]) #stage{background:radial-gradient(1100px 600px at 85% -10%,rgba(107,149,255,.18),transparent 60%),radial-gradient(900px 500px at -10% 110%,rgba(255,159,67,.13),transparent 60%),var(--bg)}
+#ctl{display:flex;align-items:center;gap:12px;padding:14px 0}
+.dots{flex:1;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.dot{width:14px;height:14px;border-radius:50%;border:0;padding:0;cursor:pointer;opacity:.35;transition:transform .15s,opacity .15s}
+.dot.on{opacity:1;transform:scale(1.35)}
+.dot:hover{opacity:.8}
+.k-theory{background:var(--bl)}.k-task{background:var(--or)}.k-end{background:var(--gr)}.k-safe{background:var(--pk)}.k-cover{background:var(--tx)}
+#cnt{font-weight:800;font-size:17px;color:var(--mut);min-width:70px;text-align:center}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:15px;font-weight:700;color:var(--mut);padding-bottom:6px}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.outline{margin:22px 0}
+.outline h2{font-size:30px;margin-bottom:14px}
+.ol{display:grid;grid-template-columns:repeat(2,1fr);gap:8px 18px}
+.ol button{display:flex;gap:12px;align-items:center;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;font:700 17px Nunito,system-ui,sans-serif;color:var(--tx);cursor:pointer}
+.ol button:hover{border-color:var(--bl)}
+.ol button.on{border-color:var(--or);box-shadow:0 0 0 1px var(--or) inset}
+.ol .i{flex:none;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#fff}
+.ol small{display:block;font-size:12px;letter-spacing:.08em;color:var(--mut);text-transform:uppercase}
+.nextl{margin:10px 0 40px}
+@media(max-width:900px){.cards{grid-template-columns:1fr 1fr}.contact{grid-template-columns:1fr 1fr}.ol{grid-template-columns:1fr}.hs .g3,.hs .g4,.hs .g2{grid-template-columns:1fr 1fr}.hs h1{font-size:44px}}
+@media(max-width:600px){.cards,.contact,.hs .g3,.hs .g4,.hs .g2{grid-template-columns:1fr}.hs h1{font-size:36px}.hs h2{font-size:30px}.lhead .tt h1{font-size:26px}}
 </style>
 </head>
 <body>
-<div id="viewport"><div id="stage"></div></div>
-<div id="ui"><button id="bp">←</button><button id="bn">→</button><div id="pg"><div id="pgf"></div></div><span id="cnt"></span><button id="bg" title="G">Reja</button><button id="bt" title="N">Eslatma</button><button id="bth" title="T">Mavzu</button><button id="bf" title="F">⛶</button></div>
-<div id="grid"><div class="gi" id="gi"></div></div>
-
+<div id="app"></div>
 <script>
-const S=[]; // slides
+const S=[],LES=[]; // slides
 const add=(h,n,cls)=>S.push({h,n:n||'',cls:cls||''});
-const div=(n,t,goal,wow,note)=>add(`<div class="big">${n}</div><div class="kick">${n}-dars</div><h1>${t}</h1><p class="lead">${goal}</p><div class="wow"><div class="kick">Bugungi «VAU»</div><p>${wow}</p></div>`,note,'div');
+const div=(n,t,goal,wow,note)=>{LES[n-1]={t,goal,wow,start:S.length};add(`<div class="big">${n}</div><div class="kick">${n}-dars</div><h1>${t}</h1><p class="lead">${goal}</p><div class="wow"><div class="kick">Bugungi «VAU»</div><p>${wow}</p></div>`,note,'div');}
 
 /* ===== KIRISH ===== */
 add(`<div class="kick">Ro'zillo aka jamoasi uchun · 6 dars</div><h1>Sun'iy intellekt:<br><span class="acc">ish quroli</span></h1><p class="lead">Drabilka, xo'jalik mollari do'koni va opalubka ijarasi uchun amaliy kurs. AI ga yozishdan tortib, o'zingizning dasturingizni yasashgacha.</p><div class="grid g4" style="margin-top:10px"><div class="card"><span class="tag t-or">ChatGPT</span></div><div class="card"><span class="tag t-bl">Gemini</span></div><div class="card"><span class="tag t-gr">Claude</span></div><div class="card"><span class="tag t-pk">Claude Code</span></div></div>`,'Boshlashdan oldin: bu kurs nazariya emas, har dars oxirida korxonaga yaraydigan tayyor natija chiqadi. Shuni ayting.');
@@ -206,34 +258,94 @@ add(`<div class="kick">Tabriklaymiz</div><h1>Endi siz <span class="acc">AI bilan
 
 add(`<div class="kick">Aloqa</div><h2>Ustoz bilan <span class="acc">bog'laning</span></h2><p class="lead">Ilhomjon Ibragimov, Codial o'quv markazi. Savol bo'lsa, yozing yoki qo'ng'iroq qiling.</p><div class="grid g2"><div class="card hl"><span class="tag t-or">Telefon</span><h3><a href="tel:+998998204432">+998 (99) 820-44-32</a></h3></div><div class="card"><span class="tag t-bl">Telegram</span><h3><a href="https://t.me/codialuz" target="_blank" rel="noopener">@codialuz</a></h3></div><div class="card"><span class="tag t-pk">Instagram</span><h3><a href="https://www.instagram.com/codialuz/" target="_blank" rel="noopener">@codialuz</a></h3></div><div class="card"><span class="tag t-gr">Sayt</span><h3><a href="https://www.codialinfo.uz/" target="_blank" rel="noopener">codialinfo.uz</a></h3></div></div>`);
 
-/* ===== ENGINE ===== */
-const st=document.getElementById('stage'),gi=document.getElementById('gi');
-S.forEach((s,i)=>{const d=document.createElement('section');d.className='slide '+s.cls;d.innerHTML=s.h+(s.n?`<div class="note"><b>Ustoz uchun:</b> ${s.n}</div>`:'');st.appendChild(d);
- const t=(d.querySelector('h1,h2')||{}).textContent||'';const k=(d.querySelector('.kick')||{}).textContent||'';
- const b=document.createElement('button');b.innerHTML=`<small>${i+1}. ${k}</small>${t}`;b.onclick=()=>{go(i);gridT(false)};gi.appendChild(b)});
-const sl=[...st.children];let cur=0;
-function go(i){cur=Math.max(0,Math.min(sl.length-1,i));sl.forEach((e,j)=>e.classList.toggle('on',j===cur));document.getElementById('pgf').style.width=((cur+1)/sl.length*100)+'%';document.getElementById('cnt').textContent=(cur+1)+' / '+sl.length;try{history.replaceState(null,'','#'+(cur+1))}catch(e){}}
-function fit(){const s=Math.min(innerWidth/1280,(innerHeight-52)/720);st.style.transform=`scale(${s})`;document.getElementById('viewport').style.bottom='52px'}
-addEventListener('resize',fit);fit();
-function gridT(v){document.getElementById('grid').classList.toggle('on',v)}
+
+/* ===== KURS MA'LUMOTI ===== */
+const TAGS=[["Google akkaunt","R-V-K-F formulasi","ChatGPT, Gemini, Claude"],["Rasmdan tarjima","Deep Research","Dastgohlarni solishtirish"],["Shartnoma","Sheets formulalari","Ijara kalkulyatori"],["O'rnatish","CLAUDE.md","Kompyuterni boshqarish"],["Vibe coding","Ijara dasturi","Zaxira"],["Do'kon yoki drabilka","Telegram bot","Yakuniy himoya"]];
+const MODULES=[{n:1,t:"AI bilan ishlash",d:"Chatda to'g'ri yozish, Xitoy texnikasini topish, hujjat va jadval tayyorlash.",l:[1,2,3]},{n:2,t:"Claude Code va o'z dasturingiz",d:"Kompyuteringizdagi AI ishchi, ijara tizimi va ikkinchi dastur.",l:[4,5,6]}];
+const CO={phone:'+998 (99) 820-44-32',tel:'tel:+998998204432',site:'https://www.codialinfo.uz/',tg:'https://t.me/codialuz',ig:'https://www.instagram.com/codialuz/'};
+const KINDS={theory:'Nazariya',task:'Amaliyot',safe:'Xavfsizlik',end:'Yakun va vazifa',cover:'Dars boshi'};
+/* lesson k: slides from its div() up to the next div(); the last lesson also gets the closing slides */
+const lessonSlides=n=>{const a=LES[n-1].start,b=n<LES.length?LES[n].start:S.length;return S.slice(a,b)};
+const text=h=>{const d=document.createElement('div');d.innerHTML=h;return d};
+const kindOf=s=>{if(s.cls==='div')return 'cover';const k=(text(s.h).querySelector('.kick')||{}).textContent||'';
+ if(/Amaliyot/i.test(k))return 'task';if(/Xavfsizlik/i.test(k))return 'safe';if(/Yakun|Himoya|Kelgusi|Tabrik|Aloqa/i.test(k))return 'end';return 'theory'};
+const titleOf=s=>{const t=text(s.h).querySelector('h1,h2');return t?t.textContent:''};
+const kickOf=s=>((text(s.h).querySelector('.kick')||{}).textContent||'').replace(/^\d+-dars\s*·?\s*/,'');
+const app=document.getElementById('app');
+let cur=0,lesson=0,keyH=null;
+
+/* ===== BOSH SAHIFA ===== */
+function home(){
+ lesson=0;keyH=null;document.title="Sun'iy intellekt: ish quroli";
+ window.removeEventListener('resize',window.fit||(()=>{}));
+ const sec=i=>`<section class="hs">${S[i].h}</section>`;
+ app.innerHTML=`<div class="wrap">
+ <div class="topbar"><div class="brand">Ro'zillo aka · <b>AI kursi</b></div><div><button class="btn" id="thm">Mavzu</button></div></div>
+ <header class="hero hs">${S[0].h}<div class="actions"><a class="btn pri" href="#dars-1">1-darsni boshlash →</a><a class="btn" href="#darslar">Barcha darslar</a></div></header>
+ ${sec(1)}${sec(3)}${sec(4)}${sec(5)}
+ <div id="darslar"></div>
+ ${MODULES.map(m=>`<section class="module"><div class="module-h"><div class="eyebrow">Modul ${m.n}</div><h2>${m.t}</h2><p>${m.d}</p></div>
+  <div class="cards">${m.l.map(n=>{const L=LES[n-1],sl=lessonSlides(n);return `<button class="lcard" data-go="${n}"><span class="n">${n}</span><h3>${L.t}</h3><p>${L.goal}</p><span class="chips">${TAGS[n-1].map(t=>`<span class="chip">${t}</span>`).join('')}</span><span class="meta">${sl.length} slayd · 2 soat</span></button>`}).join('')}</div></section>`).join('')}
+ <section class="about"><div class="eyebrow">Aloqa</div><h2>Ustoz bilan bog'laning</h2><p>Ilhomjon Ibragimov, Codial o'quv markazi. Savol bo'lsa, yozing yoki qo'ng'iroq qiling.</p>
+  <div class="contact"><a href="${CO.tel}"><small>Telefon</small><b>${CO.phone}</b></a><a href="${CO.tg}" target="_blank" rel="noopener"><small>Telegram</small><b>@codialuz</b></a><a href="${CO.ig}" target="_blank" rel="noopener"><small>Instagram</small><b>@codialuz</b></a><a href="${CO.site}" target="_blank" rel="noopener"><small>Sayt</small><b>codialinfo.uz</b></a></div></section>
+ <div class="foot">Ro'zillo aka jamoasi uchun tayyorlangan AI kursi.</div></div>`;
+ app.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{location.hash='dars-'+b.dataset.go});
+ document.getElementById('thm').onclick=th;
+}
+
+/* ===== DARS SAHIFASI ===== */
+function openLesson(n,idx){
+ const L=LES[n-1];if(!L){location.hash='';return}
+ const sl=lessonSlides(n);lesson=n;
+ document.title=n+"-dars · "+L.t;
+ app.innerHTML=`<div class="wrap">
+ <div class="lhead"><a class="btn" href="#">← Barcha darslar</a><div class="tt"><small>${n}-DARS</small><h1>${L.t}</h1></div><button class="btn" id="bt">Eslatmalar</button><button class="btn" id="thm">Mavzu</button></div>
+ <div id="player"><div id="stage"></div></div>
+ <div id="ctl"><button class="btn" id="bp">←</button><div class="dots" id="dots"></div><span id="cnt"></span><button class="btn" id="bn">→</button><button class="btn" id="bf" title="To'liq ekran (F)">⛶</button></div>
+ <div class="legend">${['theory','task','safe','end'].map(k=>`<span><i class="k-${k}"></i>${KINDS[k]}</span>`).join('')}</div>
+ <section class="outline"><h2>Bu darsda</h2><div class="ol" id="ol"></div></section>
+ <div class="nextl" id="nextl"></div><div class="foot"></div></div>`;
+ const st=document.getElementById('stage'),dots=document.getElementById('dots'),ol=document.getElementById('ol'),pl=document.getElementById('player');
+ sl.forEach((s,i)=>{const d=document.createElement('section');d.className='slide '+s.cls;d.innerHTML=s.h+(s.n?`<div class="note"><b>Ustoz uchun:</b> ${s.n}</div>`:'');st.appendChild(d);
+  const k=kindOf(s);const b=document.createElement('button');b.className='dot k-'+k;b.title=(i+1)+'. '+titleOf(s);b.onclick=()=>go(i);dots.appendChild(b);
+  const o=document.createElement('button');o.innerHTML=`<span class="i k-${k}">${i+1}</span><span><small>${i===0?'Dars boshi':kickOf(s)}</small>${titleOf(s)}</span>`;o.onclick=()=>{go(i);pl.scrollIntoView({behavior:'smooth',block:'center'})};ol.appendChild(o)});
+ const nx=LES[n];document.getElementById('nextl').innerHTML=nx?`<button class="lcard" data-go="${n+1}" style="width:100%"><span class="chips"><span class="chip">Keyingi dars</span></span><h3>${n+1}-dars: ${nx.t}</h3><p>${nx.goal}</p></button>`:'';
+ document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{location.hash='dars-'+b.dataset.go});
+ const sls=[...st.children];
+ window.go=function(i){cur=Math.max(0,Math.min(sls.length-1,i));sls.forEach((e,j)=>e.classList.toggle('on',j===cur));
+  [...dots.children].forEach((e,j)=>e.classList.toggle('on',j===cur));[...ol.children].forEach((e,j)=>e.classList.toggle('on',j===cur));
+  document.getElementById('cnt').textContent=(cur+1)+' / '+sls.length;
+  try{history.replaceState(null,'','#dars-'+n+'/'+(cur+1))}catch(e){}};
+ window.fit=function(){
+  if(document.fullscreenElement===pl){const s=Math.min(innerWidth/1280,innerHeight/720);pl.style.height='100vh';st.style.transform=`scale(${s})`;st.style.left=((innerWidth-1280*s)/2)+'px';st.style.top=((innerHeight-720*s)/2)+'px'}
+  else{const s=pl.clientWidth/1280;pl.style.height=(720*s)+'px';st.style.transform=`scale(${s})`;st.style.left='0';st.style.top='0'}};
+ window.addEventListener('resize',fit);document.addEventListener('fullscreenchange',()=>window.fit&&fit());
+ document.getElementById('bp').onclick=()=>go(cur-1);document.getElementById('bn').onclick=()=>go(cur+1);
+ document.getElementById('bt').onclick=()=>document.body.classList.toggle('notes');document.getElementById('thm').onclick=th;
+ document.getElementById('bf').onclick=()=>{document.fullscreenElement?document.exitFullscreen():pl.requestFullscreen().catch(()=>{})};
+ st.addEventListener('click',e=>{if(e.target.closest('a,button'))return;const r=st.getBoundingClientRect();go(cur+(e.clientX<r.left+r.width*0.25?-1:1))});
+ let tx=0;pl.addEventListener('touchstart',e=>tx=e.touches[0].clientX,{passive:true});
+ pl.addEventListener('touchend',e=>{const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>50)go(cur+(d<0?1:-1))});
+ keyH=e=>{const k=e.key;if(e.ctrlKey||e.metaKey||e.altKey)return;
+  if(['ArrowRight','PageDown',' ','Enter'].includes(k)){e.preventDefault();go(cur+1)}
+  else if(['ArrowLeft','PageUp','Backspace'].includes(k)){e.preventDefault();go(cur-1)}
+  else if(k==='Home')go(0);else if(k==='End')go(sls.length-1);
+  else if(k==='n'||k==='N')document.body.classList.toggle('notes');
+  else if(k==='t'||k==='T')th();else if(k==='f'||k==='F')document.getElementById('bf').click()};
+ fit();go(Math.max(0,(idx||1)-1));
+}
+addEventListener('keydown',e=>{if(keyH)keyH(e)});
+
+/* ===== MAVZU VA YO'NALTIRISH ===== */
 try{const sv=localStorage.getItem('theme');if(sv)document.documentElement.dataset.theme=sv}catch(e){}
-const th=()=>{const r=document.documentElement;r.dataset.theme=r.dataset.theme==='light'?'dark':'light';try{localStorage.setItem('theme',r.dataset.theme)}catch(e){}};
-const fs=()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen().catch(()=>{});
-addEventListener('keydown',e=>{const k=e.key;
- if(['ArrowRight','PageDown',' ','Enter'].includes(k)){e.preventDefault();go(cur+1)}
- else if(['ArrowLeft','PageUp','Backspace'].includes(k)){e.preventDefault();go(cur-1)}
- else if(k==='Home')go(0);else if(k==='End')go(sl.length-1);
- else if(k==='g'||k==='G'||k==='Escape')gridT(k==='Escape'?false:!document.getElementById('grid').classList.contains('on'));
- else if(k==='n'||k==='N')document.body.classList.toggle('notes');
- else if(k==='t'||k==='T')th();else if(k==='f'||k==='F')fs()});
-document.getElementById('bp').onclick=()=>go(cur-1);document.getElementById('bn').onclick=()=>go(cur+1);
-document.getElementById('bg').onclick=()=>gridT(true);document.getElementById('bt').onclick=()=>document.body.classList.toggle('notes');
-document.getElementById('bth').onclick=th;document.getElementById('bf').onclick=fs;
-document.getElementById('pg').onclick=e=>{const r=e.currentTarget.getBoundingClientRect();go(Math.floor((e.clientX-r.left)/r.width*sl.length))};
-let tx=0;addEventListener('touchstart',e=>tx=e.touches[0].clientX,{passive:true});
-addEventListener('touchend',e=>{const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>50)go(cur+(d<0?1:-1))});
-st.addEventListener('click',e=>{if(e.target.closest('a,button'))return;const r=st.getBoundingClientRect();go(cur+(e.clientX<r.left+r.width*0.25?-1:1))});
-go((parseInt(location.hash.slice(1))||1)-1);
+function th(){const r=document.documentElement;r.dataset.theme=r.dataset.theme==='light'?'dark':'light';try{localStorage.setItem('theme',r.dataset.theme)}catch(e){}}
+function route(){
+ const m=/^#dars-(\d{1,2})(?:\/(\d{1,2}))?$/.exec(location.hash);
+ if(m){if(+m[1]===lesson&&document.getElementById('stage')){go((+m[2]||1)-1)}else{openLesson(+m[1],+m[2]);window.scrollTo(0,0)}}
+ else if(location.hash==='#darslar'){if(!lesson&&document.getElementById('darslar')){document.getElementById('darslar').scrollIntoView()}else{home();document.getElementById('darslar').scrollIntoView()}}
+ else{home();window.scrollTo(0,0)}
+}
+addEventListener('hashchange',route);route();
 </script>
 </body>
 </html>

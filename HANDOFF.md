@@ -1,7 +1,7 @@
 # HANDOFF: Ro'zillo aka AI kursi
 
 ## Tayyor
-- `index.html`: 64 slaydli taqdimot (bitta fayl). Standart: kunduzgi mavzu, katta shrift (T tugmasi qorong'i rejimga o'tkazadi). Tugmalar: ← → o'tish, G reja, N ustoz eslatmalari, T mavzu, F to'liq ekran. Oxirgi slayd: ustoz kontakti (Codial).
+- `index.html`: bosh sahifa (mavzular ro'yxati, 6 dars kartasi) va har dars uchun alohida slayd sahifasi (#dars-N). Standart: kunduzgi mavzu, katta shrift. Kontakt: Codial (oxirgi dars oxirida va bosh sahifada).
 - `README.md`, `KURS-DASTURI-VA-NARX.md`.
 
 ## GitHub holati
