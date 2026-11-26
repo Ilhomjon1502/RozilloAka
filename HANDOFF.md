@@ -1,7 +1,7 @@
 # HANDOFF: Ro'zillo aka AI kursi
 
 ## Tayyor
-- `index.html`: bosh sahifa (mavzular ro'yxati, 6 dars kartasi) va har dars uchun alohida slayd sahifasi (#dars-N). Standart: kunduzgi mavzu, katta shrift. Kontakt: Codial (oxirgi dars oxirida va bosh sahifada).
+- `index.html`: bosh sahifa (mavzular ro'yxati, 7 dars kartasi) va har dars uchun alohida slayd sahifasi (#dars-N). Standart: kunduzgi mavzu, katta shrift. Kontakt: Codial (oxirgi dars oxirida va bosh sahifada).
 - `README.md`, `KURS-DASTURI-VA-NARX.md`.
 
 ## GitHub holati
